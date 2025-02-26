@@ -102,5 +102,5 @@ const getMemeCoins = async (req, res) => {
 //   }
 // };
 
-// module.exports = { getMemeCoins };
+module.exports = { getMemeCoins };
 
