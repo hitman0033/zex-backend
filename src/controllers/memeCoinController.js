@@ -63,42 +63,42 @@ const getMemeCoins = async (req, res) => {
   let moreDataAvailable = true;
 
   try {
-    // while (moreDataAvailable) {
-    //   console.log(`Fetching meme coins from offset: ${offset}`);
+    while (moreDataAvailable) {
+      console.log(`Fetching meme coins from offset: ${offset}`);
 
-    //   const options = {
-    //     headers: { "x-access-token": COINRANKING_API_KEY },
-    //     params: { offset, tags: "meme", limit },
-    //   };
+      const options = {
+        headers: { "x-access-token": COINRANKING_API_KEY },
+        params: { offset, tags: "meme", limit },
+      };
 
-    //   const response = await axios.get("https://api.coinranking.com/v2/coins", options);
+      const response = await axios.get("https://api.coinranking.com/v2/coins", options);
 
-    //   if (response.data && response.data.data) {
-    //     const memeCoins = response.data.data.coins;
+      if (response.data && response.data.data) {
+        const memeCoins = response.data.data.coins;
         
-    //     // ✅ Extract only Base chain meme coins
-    //     const baseMemeCoins = memeCoins.filter((coin) =>
-    //       coin.contractAddresses?.some((contract) => contract.toLowerCase().includes("base"))
-    //     );
-    //     console.log("baseMemeCoins:", baseMemeCoins);
-    //     allMemeCoins.push(...baseMemeCoins); // ✅ Corrected: Flatten the array
+        // ✅ Extract only Base chain meme coins
+        const baseMemeCoins = memeCoins.filter((coin) =>
+          coin.contractAddresses?.some((contract) => contract.toLowerCase().includes("base"))
+        );
+        console.log("baseMemeCoins:", baseMemeCoins)
+        allMemeCoins.push(...baseMemeCoins); // ✅ Corrected: Flatten the array
 
-    //     // ✅ Stop fetching if we get less than `limit` (last batch)
-    //     if (memeCoins.length < limit) {
-    //       moreDataAvailable = false;
-    //     } else {
-    //       offset += limit; // ✅ Move to next batch
-    //     }
-    //   } else {
-    //     moreDataAvailable = false;
-    //   }
-    // }
+        // ✅ Stop fetching if we get less than `limit` (last batch)
+        if (memeCoins.length < limit) {
+          moreDataAvailable = false;
+        } else {
+          offset += limit; // ✅ Move to next batch
+        }
+      } else {
+        moreDataAvailable = false;
+      }
+    }
 
-    // console.log(`Total Meme Coins Found: ${allMemeCoins.length}`);
-    res.status(200).json(COINRANKING_API_KEY);
+    console.log(`Total Meme Coins Found: ${allMemeCoins.length}`);
+    res.status(200).json(allMemeCoins);
   } catch (error) {
     console.error("Error fetching meme coins:", error.message);
-    res.status(500).json({ message: "Error fetching meme coins", error: error.message, api_key: COINRANKING_API_KEY });
+    res.status(500).json({ message: "Error fetching meme coins", error: error.message });
   }
 };
 
