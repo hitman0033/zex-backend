@@ -5,6 +5,8 @@ const { port } = require("./config/dotenvConfig");
 const tokenRoutes = require("./routes/tokenRoutes");
 const historicalRoutes = require("./routes/historicalRoutes");
 const memeCoinRoutes = require("./routes/memeCoinRoutes");
+const paymasterRoutes = require("./routes/paymasterRoutes");
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -25,6 +27,11 @@ app.use("/api/basememe", (req, res, next) => {
   console.log("Request to /api/basememe:", req.method, req.url);  // Log the incoming request
   next();
 }, memeCoinRoutes);
+
+app.use("/api/paymaster", (req, res, next) => {
+  console.log("Request to /api/paymaster:", req.method, req.url);
+  next();
+}, paymasterRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

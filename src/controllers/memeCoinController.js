@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { CMC_API_KEY, COINRANKING_API_KEY } = process.env;  // Load CMC API Key from environment variables
+const { cmcApiKey, coinRankingApiKey } = require("../config/dotenvConfig");
 
 // Controller to fetch meme coins from Base Chain
 const getMemeCoins = async (req, res) => {
@@ -13,7 +13,7 @@ const getMemeCoins = async (req, res) => {
     
     const response = await axios.get(url, {
       headers: {
-        "X-CMC_PRO_API_KEY": CMC_API_KEY,
+        "X-CMC_PRO_API_KEY": cmcApiKey,
         Accept: "application/json",
       },
       params: {
@@ -23,8 +23,6 @@ const getMemeCoins = async (req, res) => {
 
       },
     });
-    console.log(":response:", response.data);
-
     if (response.data && response.data.data) {
       const fetchedCoins = response.data.data;
       
@@ -45,7 +43,7 @@ const getMemeCoins = async (req, res) => {
     } else {
         moreDataAvailable = false;
     }
-    console.log("allMemeCoins:", allMemeCoins, start);
+    // console.log("allMemeCoins:", allMemeCoins, start);
     res.status(200).json(allMemeCoins);
   } catch (error) {
     console.error("Error fetching meme coins:", error.message);
@@ -67,7 +65,7 @@ const getMemeCoins = async (req, res) => {
 //       console.log(`Fetching meme coins from offset: ${offset}`);
 
 //       const options = {
-//         headers: { "x-access-token": COINRANKING_API_KEY },
+//         headers: { "x-access-token": coinRankingApiKey },
 //         params: { offset, tags: "meme", limit },
 //       };
 
