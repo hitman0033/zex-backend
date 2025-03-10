@@ -3,8 +3,6 @@ const { cmcApiKey } = require("../config/dotenvConfig");
 
 exports.getTokenData = async (req, res) => {
   let { symbols } = req.query;
-  symbols = `${symbols},DEGEN,TYBG,$mfer`
-  console.log("symbols:", symbols);
   if (!symbols) {
     return res.status(400).json({ error: "Token symbols are required" });
   }
