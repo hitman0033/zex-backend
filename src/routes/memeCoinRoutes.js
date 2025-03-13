@@ -4,6 +4,6 @@ const { getMemeCoins, getStoredMemeCoins } = require("../controllers/memeCoinCon
 const router = express.Router();
 
 // Define the route to fetch meme coins from Base Chain using CMC API
-router.get("/", getStoredMemeCoins);
+router.get("/", getMemeCoins);
 
 module.exports = router;
