@@ -6,7 +6,7 @@ const tokenRoutes = require("./routes/tokenRoutes");
 const historicalRoutes = require("./routes/historicalRoutes");
 const memeCoinRoutes = require("./routes/memeCoinRoutes");
 const paymasterRoutes = require("./routes/paymasterRoutes");
-
+const transactionRoutes = require("./routes/transactionRoutes");
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -32,6 +32,11 @@ app.use("/api/paymaster", (req, res, next) => {
   console.log("Request to /api/paymaster:", req.method, req.url);
   next();
 }, paymasterRoutes);
+
+app.use("/api/transaction", (req, res, next) => {
+  console.log("Request to /api/transaction:", req.method, req.url);
+  next();
+}, transactionRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
